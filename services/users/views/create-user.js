@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
 	try {
 		if (!email || !password || !user_role || !first_name || !last_name) {
 			return next(
-				new ErrorResponse("Email, Password,first_name,last_name & Role are required!", 400)
+				new ErrorResponse("Email, Password, First name, Last name & Role are required!", 400)
 			);
 		}
 
