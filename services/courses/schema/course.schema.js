@@ -9,9 +9,9 @@ const courseSchema = new mongoose.Schema({
     end_date: { type: Date, required: true },
     credits: { type: Number, required: true },
     assigned_faculty: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: [mongoose.Schema.Types.ObjectId],
         ref: "User",
-        default: null
+        default: []
     },
     is_active: { type: Boolean, default: true },
 
