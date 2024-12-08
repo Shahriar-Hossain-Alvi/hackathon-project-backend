@@ -1,6 +1,8 @@
 const ErrorResponse = require("../../../utils/middleware/error/error.response");
 const User = require("../schema/user.schema");
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { ACCESS_TOKEN_SECRET } = require("../../../configuration");
 
 
 // Create a new User 
@@ -28,18 +30,26 @@ module.exports = async (req, res, next) => {
 			user_name = `${first_name.toLowerCase()}_${last_name.toLowerCase()}${count}`;
 		}
 
-		//Hash the pin
-		const salt = bcrypt.genSaltSync(10);
-		const hashedPass = bcrypt.hashSync(password.toString(), salt);
+		//Hash the password
+		const salt = await bcrypt.genSaltSync(10);
+		const hashedPass = await bcrypt.hashSync(password.toString(), salt);
 
 		// create a new user
 		const newUser = new User({ email, password_hashed: hashedPass, user_role, first_name, last_name, user_name });
 		// save the new user in the DB
 		const result = await newUser.save();
 
+
+		// Generate JWT token
+		const token = jwt.sign(
+			{ id: result._id, email: result.email }, ACCESS_TOKEN_SECRET, { expiresIn: '12h' }
+		);
+
+
 		res.status(201).json({
 			success: true,
 			message: `Account with ${result.email} email created successfully`,
+			token
 		});
 	} catch (error) {
 		// Send Error Response
