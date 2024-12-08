@@ -8,9 +8,9 @@ module.exports = async (req, res, next) => {
 	const { email, password, user_role, first_name, last_name } = req.body;
 
 	try {
-		if (!email || !password || !user_role) {
+		if (!email || !password || !user_role || !first_name || !last_name) {
 			return next(
-				new ErrorResponse("Email, Password & Role are required!", 400)
+				new ErrorResponse("Email, Password,first_name,last_name & Role are required!", 400)
 			);
 		}
 
