@@ -16,9 +16,9 @@ const userSchema = new mongoose.Schema(
 			default: "student"
 		},
 		is_active: { type: Boolean, default: true },
-		first_name: { type: String, default: null },
-		last_name: { type: String, default: null },
-		user_name: { type: String, default: null },
+		first_name: { type: String, required: true },
+		last_name: { type: String, required: true },
+		user_name: { type: String, required: true },
 		phone: { type: String, default: null },
 		address: { type: String, default: null },
 	},
