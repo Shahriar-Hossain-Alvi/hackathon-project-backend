@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
 
 		res.status(201).json({
 			success: true,
-			message: `Account with ${result.email} email created successfully`,
+			message: `Data fetched successfully`,
 			data: result
 		});
 	} catch (error) {

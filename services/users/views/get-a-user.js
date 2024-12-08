@@ -1,16 +1,38 @@
+const mongoose = require("mongoose");
+const ErrorResponse = require("../../../utils/middleware/error/error.response");
 const User = require("../schema/user.schema");
 
 // Get a user by ID
 module.exports = async (req, res, next) => {
-	const {
-		params: { id },
-	} = req;
+	try {
+		const {
+			params: { id },
+		} = req;
 
-	const result = await User.findById(id);
+		// check if the id is 
+		if (!mongoose.Types.ObjectId.isValid(id)) {
+			return next(new ErrorResponse("Invalid user ID", 400));
+		}
 
-	res.status(200).json({
-		success: true,
-		message: "Data fetched successfully",
-		data: result,
-	});
+		// find user id by excluding password and version field
+		const result = await User.findById(id).select("-password_hashed -__v");
+
+		
+		// throw error if user is not found
+		if (!result) {
+			return next(
+				new ErrorResponse("User not found", 404)
+			)
+		}
+
+		// success response
+		res.status(200).json({
+			success: true,
+			message: "Data fetched successfully",
+			data: result,
+		});
+	} catch (error) {
+		// send error response
+		next(error)
+	}
 };
