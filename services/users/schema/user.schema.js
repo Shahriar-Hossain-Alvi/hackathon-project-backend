@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			enum: ["student", "faculty", "admin"],
 			required: true,
+			default: "student"
 		},
 		is_active: { type: Boolean, default: true },
 		first_name: { type: String, default: null },

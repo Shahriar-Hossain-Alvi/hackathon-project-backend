@@ -1,9 +1,10 @@
 const ErrorResponse = require("../../../utils/middleware/error/error.response");
 const User = require("../schema/user.schema");
+const bcrypt = require('bcryptjs');
 
 module.exports = async (req, res, next) => {
-	const { email, password, user_role = "student" } = req.body;
-
+	const { email, password, user_role } = req.body;
+	console.log(req.body);
 	try {
 		if (!email || !password || !user_role) {
 			return next(
@@ -17,8 +18,12 @@ module.exports = async (req, res, next) => {
 			return next(new ErrorResponse("User exist with the email!", 400));
 		}
 
+		//Hash the pin
+		const salt = bcrypt.genSaltSync(10);
+		const hashedPass = bcrypt.hashSync(password.toString(), salt);
+
 		// create a new user
-		const newUser = new User({ email, password_hashed: password, user_role });
+		const newUser = new User({ email, password_hashed: hashedPass, user_role });
 		// save the new user in the DB
 		const result = await newUser.save();
 
