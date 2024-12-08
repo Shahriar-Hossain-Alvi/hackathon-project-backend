@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const User = require("../schema/user.schema");
+const ErrorResponse = require("../../../utils/middleware/error/error.response");
 
+
+// update a user data
 module.exports = async (req, res, next) => {
 	const {
 		params: { id },
@@ -29,11 +32,9 @@ module.exports = async (req, res, next) => {
 		const result = await User.findByIdAndUpdate(id, updateData, {
 			new: true, // returns the updated doc instead the old one
 			runValidators: true //runs schema validation after updating the fields
-		});
+		}).select("-password_hashed -__v");
 
 		if (!result) return next(new ErrorResponse("No user found!", 404));
-
-		console.log(result);
 
 		res.status(200).json({
 			success: true,
