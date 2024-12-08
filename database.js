@@ -6,8 +6,7 @@ const clientOptions = {
 };
 
 // Connect to the database
-mongoose
-	.connect(DB.uri, clientOptions)
+mongoose.connect(DB.uri, clientOptions)
 	.then(() => {
 		console.log("DB Connected Successfully");
 	})
