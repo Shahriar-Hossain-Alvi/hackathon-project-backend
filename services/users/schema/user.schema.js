@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
 		is_active: { type: Boolean, default: true },
 		first_name: { type: String, required: true },
 		last_name: { type: String, required: true },
-		user_name: { type: String, required: true },
+		user_name: { type: String, required: true, unique: true },
 		phone: { type: String, default: null },
 		address: { type: String, default: null },
 	},
