@@ -2,6 +2,8 @@ const ErrorResponse = require("../../../utils/middleware/error/error.response");
 const User = require("../schema/user.schema");
 const bcrypt = require('bcryptjs');
 
+
+// Create a new User
 module.exports = async (req, res, next) => {
 	const { email, password, user_role, first_name, last_name } = req.body;
 
