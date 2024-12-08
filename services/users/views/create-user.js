@@ -9,6 +9,7 @@ const { ACCESS_TOKEN_SECRET } = require("../../../configuration");
 module.exports = async (req, res, next) => {
 	const { email, password, user_role, first_name, last_name } = req.body;
 
+	
 	try {
 		if (!email || !password || !user_role || !first_name || !last_name) {
 			return next(
