@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const ErrorResponse = require("../../../utils/middleware/error/error.response");
 const User = require("../schema/user.schema");
+const ErrorResponse = require("../../../utils/middleware/error/error.response");
 
 // Get a user by ID
 module.exports = async (req, res, next) => {
