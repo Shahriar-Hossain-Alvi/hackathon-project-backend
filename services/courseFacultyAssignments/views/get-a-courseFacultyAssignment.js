@@ -18,8 +18,11 @@ module.exports = async (req, res, next) => {
 
     try {
         // check if the courseFacultyAssignment exists or not
-        const result = await CourseFacultyAssignment.findById(id).select("-__v");
+        const result = await CourseFacultyAssignment.findById(id).select("-__v")
+        .populate("users_id", "first_name last_name email")
+        .populate("course_id", "title description");
 
+        
         // if courseFacultyAssignment is not found
         if (!result) {
             return next(new ErrorResponse(`There are no courseFacultyAssignment found with this ID: ${id}`, 404))
