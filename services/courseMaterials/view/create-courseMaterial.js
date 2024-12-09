@@ -56,7 +56,6 @@ module.exports = async (req, res, next) => {
         res.status(201).json({
             success: true,
             message: "Course material created successfully.",
-            data: newCourseMaterial,
         });
     } catch (error) {
         next(error);
