@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const ErrorResponse = require("../../../utils/middleware/error/error.response");
 const bcrypt = require('bcryptjs');
 const User = require("../schema/user.schema");
+const jwt = require('jsonwebtoken');
+const { ACCESS_TOKEN_SECRET } = require("../../../configuration");
 
 // login user
 module.exports = async (req, res, next) => {
@@ -30,7 +32,13 @@ module.exports = async (req, res, next) => {
             return next(new ErrorResponse("Invalid credentials", 401));
         }
 
-        const result =  user.toObject();
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: user._id, email: user.email }, ACCESS_TOKEN_SECRET, { expiresIn: '12h' }
+        );
+
+
+        const result = user.toObject();
         delete result.password_hashed;
         delete result.__v;
 
@@ -39,6 +47,7 @@ module.exports = async (req, res, next) => {
             success: true,
             message: "login successful",
             data: result,
+            token
         });
     } catch (error) {
         // send error response
