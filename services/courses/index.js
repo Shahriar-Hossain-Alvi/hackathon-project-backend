@@ -14,6 +14,9 @@ router.get("/:id", require("./views/get-a-course"));
 // update single course
 router.patch("/:id", require("./views/update-a-course")); 
 
+// delete a single course
+router.delete("/:id", require("./views/delete-a-course"));
+
 
 
 module.exports = router;
