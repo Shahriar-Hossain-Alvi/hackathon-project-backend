@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const CourseStudentEnrollment = require('../schema/courseStudentEnrollment.schema');
 
 
@@ -6,7 +5,7 @@ module.exports = async (req, res, next) => {
     try {
         // Fetch all course student enrollments with populated user and course details
         const enrollments = await CourseStudentEnrollment.find()
-            .populate("users_id", "first_name email") // Populate the user's first name and email
+            .populate("users_id", "first_name last_name email") // Populate the user's first name, last name and email
             .populate("course_id", "title description"); // Populate the course title and description
 
         // If no enrollments found
