@@ -3,15 +3,12 @@ const CourseFacultyAssignment = require("../schema/courseFacultyAssignment.schem
 const ErrorResponse = require("../../../utils/middleware/error/error.response");
 
 
-
-
-
 // Delete a CourseFacultyAssignment by ID
 module.exports = async (req, res, next) => {
   const { params: { id } } = req;
 
   // Check if the ID is a valid MongoDB ObjectId
-  if (!Mongoose.Types.ObjectId.isValid(id)) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return next(new ErrorResponse("Invalid CourseFacultyAssignment ID", 400));
   }
 
