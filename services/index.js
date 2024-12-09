@@ -14,6 +14,9 @@ router.use("/courseFacultyAssignments", require("./courseFacultyAssignments"));
 // course and its enrolled students data store related routes
 router.use("/courseStudentEnrollments", require("./courseStudentEnrollments"))
 
+// course material
+router.use("/courseMaterials", require("./courseMaterials"))
+
 
 
 module.exports = router;

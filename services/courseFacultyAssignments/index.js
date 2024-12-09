@@ -14,6 +14,6 @@ router.get("/:id", require("./views/get-a-courseFacultyAssignment"))
 router.delete("/:id", require("./views/delete-courseFacultyAssignment"))
 
 // update a courseFacultyAssignment
-router.patch("/:id", require("./views/Update-courseFacultyAssignment"));
+router.patch("/:id", require("./views/update-courseFacultyAssignment"))
 
 module.exports = router;
