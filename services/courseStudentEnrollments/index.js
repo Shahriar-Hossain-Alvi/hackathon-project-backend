@@ -11,4 +11,7 @@ router.get("/", require("./views/get-courseStudentEnrollments"));
 // get single course student enrollment with populate data
 router.get("/:id", require("./views/get-a-courseStudentEnrollment"));
 
+// patch
+router.patch("/:id", require("./views/update-courseStudentEnrollment"));
+
 module.exports = router;
