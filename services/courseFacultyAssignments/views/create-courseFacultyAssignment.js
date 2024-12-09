@@ -8,24 +8,24 @@ const CourseFacultyAssignment = require("../schema/courseFacultyAssignment.schem
 module.exports = async (req, res, next) => {
     const { users_id, course_id } = req.body;
 
-    // if (!users_id || !course_id) {
-    //     return next(
-    //         new ErrorResponse("Faculty user ID and Assigned Course ID are required.", 400)
-    //     );
-    // }
+    if (!users_id || !course_id) {
+        return next(
+            new ErrorResponse("Faculty user ID and Assigned Course ID are required.", 400)
+        );
+    }
 
-    // if (!mongoose.Types.ObjectId.isValid(users_id) ) {
-    //     return next(new ErrorResponse("Invalid user ID", 400));
-    // }
-    // if (!mongoose.Types.ObjectId.isValid(course_id) ) {
-    //     return next(new ErrorResponse("Invalid course ID", 400));
-    // }
-    
+    if (!mongoose.Types.ObjectId.isValid(users_id)) {
+        return next(new ErrorResponse("Invalid user ID", 400));
+    }
+    if (!mongoose.Types.ObjectId.isValid(course_id)) {
+        return next(new ErrorResponse("Invalid course ID", 400));
+    }
+
     try {
 
         // check faculty
         const userExists = await User.findById(users_id);
-        if(!userExists) {
+        if (!userExists) {
             return next(new ErrorResponse("The specified faculty user does not exist in Database.", 404));
         }
 
@@ -35,8 +35,8 @@ module.exports = async (req, res, next) => {
             return next(new ErrorResponse("The specified course does not exist in Database.", 404));
         }
 
-		// check existing Faculty user ID
-		const isCourseFacultyAssignment = await CourseFacultyAssignment.findOne({ users_id, course_id });
+        // check existing Faculty user ID
+        const isCourseFacultyAssignment = await CourseFacultyAssignment.findOne({ users_id, course_id });
 
         if (isCourseFacultyAssignment) {
             return next(new ErrorResponse("A course with this faculty is already exist !", 400));
@@ -47,13 +47,12 @@ module.exports = async (req, res, next) => {
             users_id,
             course_id,
         });
-        
-      const result = await newCourseFacultyAssignment.save();
-        
+       const result =  await newCourseFacultyAssignment.save();
+    
         res.status(201).json({
             success: true,
             message: "Course-Faculty assignment created successfully.",
-            data: result,
+
         });
     } catch (error) {
         // Send Error Response
